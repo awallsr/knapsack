@@ -30,4 +30,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'minitest', '>= 5.0.0'
   spec.add_development_dependency 'pry', '~> 0'
   spec.add_development_dependency 'timecop', '>= 0.9.4'
+  spec.add_development_dependency 'parallel_tests', '~> 4.7.2'
 end

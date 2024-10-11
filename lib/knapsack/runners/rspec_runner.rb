@@ -12,7 +12,14 @@ module Knapsack
         Knapsack.logger.info allocator.leftover_node_tests
         Knapsack.logger.info
 
-        cmd = %Q[bin/rspec #{args} --default-path #{allocator.test_dir} -- #{allocator.stringify_node_tests}]
+        parallel_test_processors = ENV['PARALLEL_TEST_PROCESSORS'] || 1
+        parallel_enabled = ENV['PARALLEL_TEST_ENABLED'] == 'true'
+
+        if parallel_enabled
+          cmd = %Q[RAILS_ENV=test PARALLEL_TEST_PROCESSORS=#{parallel_test_processors} parallel_rspec -- #{args} --default-path #{allocator.test_dir} -- #{allocator.stringify_node_tests}]
+        else
+          cmd = %Q[bundle exec rspec #{args} --default-path #{allocator.test_dir} -- #{allocator.stringify_node_tests}]
+        end
 
         exec(cmd)
       end
